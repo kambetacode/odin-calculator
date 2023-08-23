@@ -1,0 +1,22 @@
+body {
+    background-color: hsl(240, 18%, 27%);
+}
+
+#num-pad {
+    display: grid;
+    height: 500px;
+    width: 400px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    border: 1px solid black;
+    gap: 20px;
+    padding: 20px;
+}
+
+.gridNum {
+    border: 1px solid black;
+    height: 1fr;
+    width: 1fr;
+    margin: 0;
+    padding: 0;
+}

@@ -8,8 +8,11 @@ body {
 }
 
 #results {
-    height: 100px;
-    width: 440px;
+    padding: 50px;
+    font-size: 60px;
+    text-align: right;
+    height: 50px;
+    width: 340px;
     border: 1px solid black;
 }
 
@@ -39,4 +42,8 @@ body {
     background-color: black;
     color: white;
     border: 1px solid white;
+}
+
+.hovered {
+    cursor: pointer;
 }

@@ -1,5 +1,5 @@
 body {
-    background-color: hsl(240, 18%, 27%);
+    background-color: black;
 }
 #calculator {
     display: flex;
@@ -8,27 +8,50 @@ body {
 }
 
 #results {
+    color: white;
+    background-color: #22252D;
     padding: 50px;
     font-size: 60px;
     text-align: right;
     height: 50px;
     width: 340px;
-    border: 1px solid black;
+    border-radius: 20px 20px 0 0;
+}
+
+#results-one {
+    color: white;
+    margin-top: -20px;
+    margin-left: 5px;
+    font-size: 60px;
+    text-align: right;
+    height: 40px;
+    width: 340px;
+
+}
+
+#results-two {
+    color: white;
+    margin-top: 20px;
+    font-size: 60px;
+    text-align: right;
+    height: 40px;
+    width: 340px;
+
 }
 
 #num-pad {
+    background-color: #292D36;
     display: grid;
     height: 500px;
     width: 400px;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    border: 1px solid black;
     gap: 20px;
     padding: 20px;
+    border-radius: 0 0  20px 20px;
 }
 
 .gridNum {
-    border: 1px solid black;
     height: 1fr;
     width: 1fr;
     margin: 0;
@@ -39,9 +62,10 @@ body {
     font-size: 30px;
     width: 85px;
     height: 85px;     
-    background-color: black;
+    background-color: #272B33;
     color: white;
-    border: 1px solid white;
+    border-radius: 20px;
+    border: none;
 }
 
 .hovered {

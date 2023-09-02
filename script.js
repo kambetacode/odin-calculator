@@ -10,6 +10,8 @@ let num2 = [];
 let num1Display = 0;
 let num2Display = 0;
 let sign = ''
+let numTest = [[], [], []];
+let display;
 
 
 let result = 0;
@@ -106,59 +108,38 @@ function events() {
     buttons = document.querySelectorAll('.buttons')
 
 
-// --------------------------------Operators logic----------------------------------------------------------------------------------------
+// ----------------------Operators logic----------------------------------------------------
 
     sumSign.addEventListener('click', () => {
-        if(num1Display === 0) {
-            alert('invalid format')
-        } else {
-            if(signCheck === false) {
-            signCheck = true
             sign = '+'
-            resultsOne.innerHTML = `${num1Display} ${sign}`
-            }
-        }
+            addNumToArr(sign)
     })
 
     minusSign.addEventListener('click', () => {
-        if(num1Display === 0) {
-            alert('invalid format')
-        }   else {
-            if(signCheck === false) {
-            signCheck = true
             sign = '-'
-            resultsOne.innerHTML = `${num1Display} ${sign}`
-            }
-        }
+            addNumToArr(sign)
     })
 
     multiplySign.addEventListener('click', () => {
-        if(num1Display === 0) {
-            alert('invalid format')
-        }   else {
-            if(signCheck === false) {
-            signCheck = true
+        if(signCheck === false) {
             sign = '*'
+            addNumToArr(sign)
+            signCheck = true
             resultsOne.innerHTML = `${num1Display} ${sign}`
-            }
         }
     })
 
     divideSign.addEventListener('click', () => {
-        if(num1Display === 0) {
-            alert('invalid format')
-        }   else {
-            if(signCheck === false) {
+        if(signCheck === false) {
+            sign = '/'
+            addNumToArr(sign)
             signCheck = true
-            sign = '÷'
             resultsOne.innerHTML = `${num1Display} ${sign}`
-            }
         }
     })
-
-//---------------------------------------------------------------------------------------------------------------------------------
  
-//---------------------------------Each button logic-------------------------------------------------------------------------------
+//------------------Each button logic-------------------------------------------------------------------
+
     AC.addEventListener('click', () => {
         num1 = []
         num1Display = 0
@@ -170,104 +151,53 @@ function events() {
     })
 
     one.addEventListener('click', () => {
-        if(signCheck === false) {
-            addNumberOne(1)
+            addNumToArr(1)
             resultsOne.innerHTML = `${num1Display}`
-
-        } else {
-            addNumberTwo(1)
-            resultsOne.innerHTML = `${num1Display} ${sign} ${num2Display}`
-        }
     })
 
     two.addEventListener('click', () => {
-        if(signCheck === false) {
-        addNumberOne(2)
+        addNumToArr(2)
         resultsOne.innerHTML = `${num1Display}`
-    } else {
-        addNumberTwo(2)
-        resultsOne.innerHTML = `${num1Display} ${sign} ${num2Display}`
-    }
     })
 
     three.addEventListener('click', () => {
-        if(signCheck === false) {
-        addNumberOne(3)
+        addNumToArr(3)
         resultsOne.innerHTML = `${num1Display}`
-    } else {
-        addNumberTwo(3)
-        resultsOne.innerHTML = `${num1Display} ${sign} ${num2Display}`
-    }
     })
 
     four.addEventListener('click', () => {
-        if(signCheck === false) {
-        addNumberOne(4)
+        addNumToArr(4)
         resultsOne.innerHTML = `${num1Display}`
-    } else {
-        addNumberTwo(4)
-        resultsOne.innerHTML = `${num1Display} ${sign} ${num2Display}`
-    }
     })
 
     five.addEventListener('click', () => {
-        if(signCheck === false) {
-        addNumberOne(5)
+        addNumToArr(5)
         resultsOne.innerHTML = `${num1Display}`
-    } else {
-        addNumberTwo(5)
-        resultsOne.innerHTML = `${num1Display} ${sign} ${num2Display}`
-    }
     })
 
     six.addEventListener('click', () => {
-        if(signCheck === false) {
-        addNumberOne(6)
+        addNumToArr(6)
         resultsOne.innerHTML = `${num1Display}`
-    } else {
-        addNumberTwo(6)
-        resultsOne.innerHTML = `${num1Display} ${sign} ${num2Display}`
-    }
     })
 
     seven.addEventListener('click', () => {
-        if(signCheck === false) {
-        addNumberOne(7)
+        addNumToArr(7)
         resultsOne.innerHTML = `${num1Display}`
-    } else {
-        addNumberTwo(7)
-        resultsOne.innerHTML = `${num1Display} ${sign} ${num2Display}`
-    }
     })
 
     eight.addEventListener('click', () => {
-        if(signCheck === false) {
-        addNumberOne(8)
+        addNumToArr(8)
         resultsOne.innerHTML = `${num1Display}`
-    } else {
-        addNumberTwo(8)
-        resultsOne.innerHTML = `${num1Display} ${sign} ${num2Display}`
-    }
     })
 
     nine.addEventListener('click', () => {
-        if(signCheck === false) {
-        addNumberOne(9)
+        addNumToArr(9)
         resultsOne.innerHTML = `${num1Display}`
-    } else {
-        addNumberTwo(9)
-        resultsOne.innerHTML = `${num1Display} ${sign} ${num2Display}`
-    }
     })
 
     zero.addEventListener('click', () => {
-        if(signCheck === false) {
-        addNumberOne(0)
+        addNumToArr(0)
         resultsOne.innerHTML = `${num1Display}`
-    } else {
-        addNumberTwo(0)
-        resultsOne.innerHTML = `${num1Display} ${sign} ${num2Display}`
-    }
     })
 
     dot.addEventListener('click', () => {
@@ -315,19 +245,34 @@ createGrid()
 resultsOne.innerHTML = `${result}`
 resultsTwo.style.fontSize = '40px'
 
-// ------------------------------------------------------------------------------------------------------------------------------------------
+//----------------Functionality to add numbers and functions to make math calculations------------------------
 
-
-//----------------------------Functionality to add numbers and functions to make math calculations-------------------------------------------
-
-function addNumberOne(number) {
-    num1.push(number)
-    if(num1[num1.length - 1] === '.') {
-        num1Display = num1.join('')
+function addNumToArr(number) {
+    if (numTest[1].length === 0) {
+        if (Number.isInteger(number)) {
+            numTest[0].push(number)
+            num1Display = numTest[0].join('')
+            display = num1Display
+            resultsOne.innerHTML = `${display}`
+            console.log(display)
+        } else if (isNaN(number)) {
+            numTest[1] = number
+            display = num1Display.concat(numTest[1])
+            console.log(display)
+            resultsOne.innerHTML = `${display}`
+        }
     } else {
-    num1Display = parseFloat(num1.join(''))
-
-}
+        if (Number.isInteger(number)) {
+            numTest[2].push(number)
+            num2Display = numTest[2].join('')
+            display = display.concat(num2Display)
+            resultsOne.innerHTML = `${display}`
+            console.log(display)
+        } else if (isNaN(number)) {
+            numTest[1] = number
+            console.log(numTest)
+        }
+    }
 }
 
 function addNumberTwo(number) {

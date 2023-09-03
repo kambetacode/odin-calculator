@@ -228,9 +228,6 @@ function lengthCheck(number) {
 }
 
 
-
-
-
 function addNumbers(number) {
     if (signs.length === 0) { // run code if sign button has not been clicked
 

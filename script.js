@@ -5,13 +5,14 @@ const resultsTwo = document.getElementById('results-two');
 
 
 let signCheck = false
-let num1 = [];
-let num2 = [];
-let num1Display = 0;
-let num2Display = 0;
 let sign = ''
-let numTest = [[], [], []];
-let display;
+
+let num1 = []
+let num1Int;
+let num2 = []
+let num2Int;
+let signs = []
+let display = '';
 
 
 let result = 0;
@@ -111,126 +112,95 @@ function events() {
 // ----------------------Operators logic----------------------------------------------------
 
     sumSign.addEventListener('click', () => {
-            sign = '+'
-            addNumToArr(sign)
+        sign = '+'
+        lengthCheck(sign)
     })
 
     minusSign.addEventListener('click', () => {
-            sign = '-'
-            addNumToArr(sign)
+        sign = '-'
+        lengthCheck(sign)
     })
 
     multiplySign.addEventListener('click', () => {
-        if(signCheck === false) {
-            sign = '*'
-            addNumToArr(sign)
-            signCheck = true
-            resultsOne.innerHTML = `${num1Display} ${sign}`
-        }
+        sign = 'x'
+        lengthCheck(sign)
     })
 
     divideSign.addEventListener('click', () => {
-        if(signCheck === false) {
-            sign = '/'
-            addNumToArr(sign)
-            signCheck = true
-            resultsOne.innerHTML = `${num1Display} ${sign}`
-        }
+        sign = '÷'
+        lengthCheck(sign)
     })
  
 //------------------Each button logic-------------------------------------------------------------------
 
     AC.addEventListener('click', () => {
         num1 = []
-        num1Display = 0
         num2 = []
-        num2Display = 0
-        resultsOne.innerHTML = `${num1Display}`
+        signs = []
+        display = '';
+        resultsOne.innerHTML = `0`
         resultsTwo.innerHTML = ''
         signCheck = false
+        resultsOne.style.fontSize = '60px'
     })
 
+    buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+            applyButtonPressAnimation(button);
+        });
+    });
+
     one.addEventListener('click', () => {
-            addNumToArr(1)
-            resultsOne.innerHTML = `${num1Display}`
+        lengthCheck(1)
+
     })
 
     two.addEventListener('click', () => {
-        addNumToArr(2)
-        resultsOne.innerHTML = `${num1Display}`
+        lengthCheck(2)
     })
 
     three.addEventListener('click', () => {
-        addNumToArr(3)
-        resultsOne.innerHTML = `${num1Display}`
+        lengthCheck(3)
     })
 
     four.addEventListener('click', () => {
-        addNumToArr(4)
-        resultsOne.innerHTML = `${num1Display}`
+        lengthCheck(4)
     })
 
     five.addEventListener('click', () => {
-        addNumToArr(5)
-        resultsOne.innerHTML = `${num1Display}`
+        lengthCheck(5)
     })
 
     six.addEventListener('click', () => {
-        addNumToArr(6)
-        resultsOne.innerHTML = `${num1Display}`
+        lengthCheck(6)
     })
 
     seven.addEventListener('click', () => {
-        addNumToArr(7)
-        resultsOne.innerHTML = `${num1Display}`
+        lengthCheck(7)
     })
 
     eight.addEventListener('click', () => {
-        addNumToArr(8)
-        resultsOne.innerHTML = `${num1Display}`
+        lengthCheck(8)
     })
 
     nine.addEventListener('click', () => {
-        addNumToArr(9)
-        resultsOne.innerHTML = `${num1Display}`
+        lengthCheck(9)
     })
 
     zero.addEventListener('click', () => {
-        addNumToArr(0)
-        resultsOne.innerHTML = `${num1Display}`
+        lengthCheck(0)
     })
 
     dot.addEventListener('click', () => {
-        if(signCheck === false) {
-        addNumberOne('.')
-        resultsOne.innerHTML = `${num1Display}`
-    } else {
-        addNumberTwo('.')
-        resultsOne.innerHTML = `${num1Display} ${sign} ${num2Display}`
-    }
+        lengthCheck('.')
     })
 
     equal.addEventListener('click', () => {
-        if(signCheck === false) {
-        resultsTwo.innerHTML = `${num1Display}`
+        if(signs.length === 0) {
+        resultsTwo.innerHTML = `${num1Int}`
         resultsTwo.style.fontSize = '40px'
     } else {
-        switch(sign) {
-            case '+': 
-            resultsTwo.innerHTML = `${add(num1Display, num2Display)}`
-            break
-            case '-': 
-            resultsTwo.innerHTML = `${subtract(num1Display, num2Display)}`
-            break
-            case '*': 
-            resultsTwo.innerHTML = `${multiply(num1Display, num2Display)}`
-            break
-            case '÷': 
-            resultsTwo.innerHTML = `${divide(num1Display, num2Display)}`
-            break
-        }
-        
-        
+        makeOperations(num1Int, num2Int, sign)
     }
     })
 
@@ -247,59 +217,98 @@ resultsTwo.style.fontSize = '40px'
 
 //----------------Functionality to add numbers and functions to make math calculations------------------------
 
-function addNumToArr(number) {
-    if (numTest[1].length === 0) {
-        if (Number.isInteger(number)) {
-            numTest[0].push(number)
-            num1Display = numTest[0].join('')
-            display = num1Display
-            resultsOne.innerHTML = `${display}`
-            console.log(display)
-        } else if (isNaN(number)) {
-            numTest[1] = number
-            display = num1Display.concat(numTest[1])
-            console.log(display)
-            resultsOne.innerHTML = `${display}`
-        }
+
+function lengthCheck(number) {
+    if(display.length < 11) {
+        addNumbers(number)
     } else {
-        if (Number.isInteger(number)) {
-            numTest[2].push(number)
-            num2Display = numTest[2].join('')
-            display = display.concat(num2Display)
+        resultsOne.style.fontSize = '20px'
+        addNumbers(number)
+    }
+}
+
+
+
+
+
+function addNumbers(number) {
+    if (signs.length === 0) { // run code if sign button has not been clicked
+
+        if (Number.isInteger(number)) { // run if clicked button is a number
+            num1.push(number);
+            num1Int = parseFloat(num1.join(''));
+            display += number.toString();
+            resultsOne.innerHTML = `${display}`;
+        } else if(number === '.') { // run if number is a . to add decimals
+            num1.push(number);
+            display += number.toString();
+            resultsOne.innerHTML = `${display}`;
+        } else { // run if clicked button isn't a number or .
+            signs.push(number);
+            display += number;
+            resultsOne.innerHTML = `${display}`;
+        }
+        
+    } else { // run code if sign button has been already clicked
+
+        if (Number.isInteger(number)) { // run if clicked button is a number
+
+            if(signCheck === false) {  // run if signCheck is false
+            num2.push(number)
+            num2Int = parseFloat(num2.join(''));
+            display += number
             resultsOne.innerHTML = `${display}`
-            console.log(display)
-        } else if (isNaN(number)) {
-            numTest[1] = number
-            console.log(numTest)
+            } else { // run if signCheck is true
+                num2.push(number)
+                num2Int = parseFloat(num2.join(''));
+                display+= number
+                resultsOne.innerHTML = `${display}`
+            }
+
+        } else if(number === '.') { // run if number is a . to add decimals
+            num2.push(number);
+            num2Int = parseFloat(num2.join(''));
+            display += number.toString();
+            resultsOne.innerHTML = `${display}`;
+        }
+        else { // run if clicked button isn't a number
+            signCheck = true // turn signCheck on when sign button is clicked twice
+            signs.push(number)
+            display += number
+            makeOperations(parseFloat(num1.join('')), parseFloat(num2.join('')), signs[signs.length  - 2])
+            num1 = [finalResult]
+            num1Int = finalResult
+            resultsOne.innerHTML = `${display}`
+            num2 = []
         }
     }
 }
 
-function addNumberTwo(number) {
-    num2.push(number)
-    if(num2[num2.length - 1] === '.') {
-        num2Display = num2.join('')
-    } else {
-    num2Display = parseFloat(num2.join(''))
+function makeOperations(num1, num2, sign) {
+    switch(sign) {
+        case "+":
+            finalResult = num1 + num2
+            resultsTwo.innerHTML = `${parseFloat(finalResult)}`
+            break;
+        case "-":
+            finalResult = num1 - num2
+            resultsTwo.innerHTML = `${parseFloat(finalResult)}`
+            break;
+        case "x":
+            finalResult = num1 * num2
+            resultsTwo.innerHTML = `${parseFloat(finalResult)}`
+            break;
+        case "÷":
+            finalResult = num1 / num2
+            resultsTwo.innerHTML = `${parseFloat(finalResult)}`
+            break;
     }
 }
 
-function add(num1, num2) {
-    finalResult = num1 + num2
-    return finalResult
-}
 
-function subtract(num1, num2) {
-    finalResult = num1 - num2
-    return finalResult
-}
-
-function multiply(num1, num2) {
-    finalResult = num1 * num2
-    return finalResult
-}
-
-function divide(num1, num2) {
-    finalResult = num1 / num2
-    return finalResult
+function applyButtonPressAnimation(button) {
+    button.classList.add("button-press-animation");
+    setTimeout(() => {
+        button.classList.remove("button-press-animation");
+    }, 100);
 }

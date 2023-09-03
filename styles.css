@@ -71,3 +71,9 @@ body {
 .hovered {
     cursor: pointer;
 }
+
+.button-press-animation {
+    transform: scale(0.95);
+    transition: transform 0.1s; 
+    background-color: #3D424A;
+}
